@@ -335,6 +335,10 @@ namespace frog.Windows.TouchProxy
 											ProtocolTraceCategory selectedProtocolTraceCategory = Enum.TryParse(value.Value, true, out selectedProtocolTraceCategory) ? selectedProtocolTraceCategory : this.SelectedProtocolTraceCategory;
 											this.SelectedProtocolTraceCategory = selectedProtocolTraceCategory;
 											break;
+                                        case "IsEnabled":
+                                            bool isEnabled = Boolean.TryParse(value.Value, out isEnabled) ? isEnabled : false;
+                                            this.TouchInjectionService.IsEnabled = isEnabled;
+                                            break;
 										default:
 											break;
 									}
@@ -365,8 +369,9 @@ namespace frog.Windows.TouchProxy
 					new XElement("setting", new XAttribute("key", "WindowsKeyPressTouchCount"), new XAttribute("value", this.TouchInjectionService.WindowsKeyPressTouchCount)),
 					new XElement("setting", new XAttribute("key", "CalibrationBuffer"), new XAttribute("value", string.Format("{0},{1},{2},{3}", this.TouchInjectionService.CalibrationBufferLeft, this.TouchInjectionService.CalibrationBufferTop, this.TouchInjectionService.CalibrationBufferRight, this.TouchInjectionService.CalibrationBufferBottom))),
 					new XElement("setting", new XAttribute("key", "IsProtocolTraceEnabled"), new XAttribute("value", this.IsProtocolTraceEnabled)),
-					new XElement("setting", new XAttribute("key", "SelectedProtocolTraceCategory"), new XAttribute("value", this.SelectedProtocolTraceCategory))
-				).Save(_settingsFileName);
+					new XElement("setting", new XAttribute("key", "SelectedProtocolTraceCategory"), new XAttribute("value", this.SelectedProtocolTraceCategory)),
+                    new XElement("setting", new XAttribute("key", "IsEnabled"), new XAttribute("value", this.TouchInjectionService.IsEnabled))
+                ).Save(_settingsFileName);
 			}
 			catch
 			{
